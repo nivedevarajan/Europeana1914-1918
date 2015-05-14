@@ -122,7 +122,9 @@ module Europeana
       end
       
       def to_oai_edm
-        edm.to_rdfxml.sub(/<\?xml .*? ?>/, "")
+        edm.to_rdfxml.sub(/<\?xml .*? ?>/, "") + attachments.collect do |a|
+          a.edm.to_rdfxml.sub(/<\?xml .*? ?>/, "")
+        end.join("\n")
       end
     end
   end
